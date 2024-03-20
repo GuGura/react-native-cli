@@ -22,8 +22,10 @@ export default function Login({navigation}: any): React.ReactElement {
           <Text style={styles.brandName}>Ghost</Text>
         </View>
         <Text style={styles.loginContinueTxt}>Login in to join Ghost!</Text>
-        <Input placeholder={'Email'} />
-        <Input placeholder={'Password'} />
+        <View style={styles.inputs}>
+          <Input placeholder={'Email'} />
+          <Input placeholder={'Password'} />
+        </View>
         <View style={styles.loginBtnWrapper}>
           <LinearGradient
             colors={[COLORS.gradientForm, COLORS.primary]}
@@ -77,6 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     padding: 15,
+    backgroundColor: COLORS.white,
   },
   main: {
     flex: 1,
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     textAlign: 'center',
     color: COLORS.gray,
-    marginBottom: 16,
+
     fontWeight: 'bold',
   },
   loginBtnWrapper: {
@@ -115,6 +118,10 @@ const styles = StyleSheet.create({
   linearGradient: {
     width: '100%',
     borderRadius: 50,
+  },
+  inputs: {
+    width: '100%',
+    paddingTop: 15,
   },
   input: {
     borderWidth: 1,

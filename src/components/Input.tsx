@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     padding: 0,
     textAlignVertical: 'top',
     height: 22,
+    color: COLORS.black,
   },
   height65: {
     height: 65,

@@ -1,15 +1,18 @@
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useLayoutEffect} from 'react';
+import {COLORS} from '../../constants';
 
 export default function Register({navigation}: {navigation: any}) {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerBackTitleVisible: false,
-    });
-  }, [navigation]);
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={styles.screen}>
       <Text style={{color: 'black', fontSize: 40}}>Register</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: COLORS.white,
+    flex: 1,
+  },
+});

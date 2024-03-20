@@ -1,22 +1,18 @@
 import Login from '../screens/auth/Login.tsx';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {COLORS, ROUTES} from '../constants';
+import {ROUTES} from '../constants';
 import ForgotPassword from '../screens/auth/ForgotPassword.tsx';
 import Register from '../screens/auth/Register.tsx';
-import {
-  Pressable,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import ICON from '../assets/icons/icon-chevron-left.svg';
+import BackButton from '../components/UI/BackButton.tsx';
 const Stack = createNativeStackNavigator<any>();
 export default function AuthNavigator() {
   return (
-    <Stack.Navigator initialRouteName={ROUTES.LOGIN}>
+    <Stack.Navigator
+      initialRouteName={ROUTES.LOGIN}
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}>
       <Stack.Screen
         name={ROUTES.LOGIN}
         component={Login}
@@ -32,17 +28,11 @@ export default function AuthNavigator() {
           title: '',
           headerBackTitleVisible: false,
           headerLeft: ({tintColor}) => (
-            <View style={styles.backBtnWrapper}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <ICON
-                  width={24}
-                  height={24}
-                  color={tintColor}
-                  style={styles.backBtn}
-                />
-              </TouchableOpacity>
-              <Text style={styles.backTitle}>FindPassword</Text>
-            </View>
+            <BackButton
+              navigation={navigation}
+              tintColor={tintColor}
+              title={'Forgot Password'}
+            />
           ),
         })}
       />
@@ -53,39 +43,16 @@ export default function AuthNavigator() {
           headerTintColor: 'black',
           title: '',
           headerBackTitleVisible: false,
+          headerShadowVisible: false, // applied here
           headerLeft: ({tintColor}) => (
-            <View style={styles.backBtnWrapper}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <ICON
-                  width={24}
-                  height={24}
-                  color={tintColor}
-                  style={styles.backBtn}
-                />
-              </TouchableOpacity>
-              <Text style={styles.backTitle}>Sign Up</Text>
-            </View>
+            <BackButton
+              navigation={navigation}
+              tintColor={tintColor}
+              title={'Sign Up'}
+            />
           ),
         })}
       />
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  backBtnWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    top: Platform.select({ios: 0, android: 2}),
-    position: 'relative',
-  },
-  backTitle: {
-    color: COLORS.black,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-});
