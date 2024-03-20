@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899686072292",
+    "project_id": "ghost-8a72b",
+    "storage_bucket": "ghost-8a72b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899686072292:android:b3b928c95149544c2911f1",
+        "android_client_info": {
+          "package_name": "com.ghost"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR3Jua2MGvDBt_TqfrTzcJhwFtIgVQ0SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
