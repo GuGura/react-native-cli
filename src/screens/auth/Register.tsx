@@ -1,34 +1,27 @@
 import {
+  Alert,
   Keyboard,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {COLORS} from '../../constants';
-import Input from '../../components/Input.tsx';
+import {COLORS, ROUTES} from '../../constants';
+import Input from '../../components/UI/Input.tsx';
 import Button from '../../components/UI/Button.tsx';
+import {SingUp} from '../../service/auth.ts';
 
 export default function Register({navigation}: {navigation: any}) {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [isValidate, setIsValidate] = useState({
-    name: false,
     email: false,
     password: false,
     passwordConfirm: false,
   });
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  function nameHandler(text: string) {
-    if (text.length > 4) {
-      setIsValidate({...isValidate, name: false});
-    }
-    setName(text);
-  }
 
   function emailHandler(text: string) {
     if (emailRegex?.test(email)) {
@@ -49,13 +42,8 @@ export default function Register({navigation}: {navigation: any}) {
     setPasswordConfirm(text);
   }
 
-  function onSubmitHandler() {
-    console.log(name, email, password, passwordConfirm);
-
+  async function onSubmitHandler() {
     const validate = isValidate;
-    if (name?.length < 3) {
-      validate.name = true;
-    }
     if (!emailRegex?.test(email)) {
       validate.email = true;
     }
@@ -67,21 +55,24 @@ export default function Register({navigation}: {navigation: any}) {
     }
     setIsValidate({...validate});
     if (Object.values(validate).every(item => !item)) {
-      console.log('submit');
+      const res = await SingUp({email, password});
+
+      if (res.isError) {
+        Alert.alert('Error', res.message);
+        return;
+      }
+      if (res.user) {
+        console.log(res);
+        navigation.navigate(ROUTES.LOGIN);
+      }
     }
   }
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
         <View style={styles.container}>
           <Text style={styles.TitleTxt}>Sign Up to join Ghost!</Text>
-          <Input
-            placeholder={'Name'}
-            label={'Name'}
-            value={name}
-            onChangeText={nameHandler}
-            invalid={isValidate.name}
-          />
           <Input
             placeholder={'Email'}
             label={'Email'}

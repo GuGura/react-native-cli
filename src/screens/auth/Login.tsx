@@ -7,15 +7,18 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 
 import {COLORS, ROUTES} from '../../constants';
 import GHOST from '../../assets/icons/ghost.svg';
 import ICON from '../../assets/icons/icon-kakaotalk-light.svg';
-import Input from '../../components/Input.tsx';
-import Button from '../../components/UI/Button.tsx';
+import LoginForm from '../../components/login/LoginForm.tsx';
+import SecondButton from '../../components/UI/SecondButton.tsx';
 
 export default function Login({navigation}: any): React.ReactElement {
+  function forgotPasswordHandler() {
+    navigation.navigate(ROUTES.FORGOT_PASSWORD);
+  }
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -25,21 +28,11 @@ export default function Login({navigation}: any): React.ReactElement {
             <Text style={styles.brandName}>Ghost</Text>
           </View>
           <Text style={styles.loginContinueTxt}>Login in to join Ghost!</Text>
-          <View style={styles.inputs}>
-            <Input placeholder={'Email'} />
-            <Input placeholder={'Password'} textContentType={'password'} />
-          </View>
-          <Button
-            text={'Log in'}
-            colors={[COLORS.gradientForm, COLORS.primary]}
-            onPress={() => console.log('log')}
+          <LoginForm />
+          <SecondButton
+            txt={'Forgot Password'}
+            onPress={forgotPasswordHandler}
           />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(ROUTES.FORGOT_PASSWORD);
-            }}>
-            <Text style={styles.forgotPassText}>Forgot Password</Text>
-          </TouchableOpacity>
           <View style={styles.kakaoWrapper}>
             <TouchableOpacity style={styles.kakaoBtn}>
               <ICON width={30} height={30} style={styles.kakaoIcon} />
@@ -107,12 +100,6 @@ const styles = StyleSheet.create({
     height: 55,
     paddingVertical: 0,
     width: '100%',
-  },
-  forgotPassText: {
-    color: COLORS.primary,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: 15,
   },
   kakaoWrapper: {
     shadowColor: '#000',

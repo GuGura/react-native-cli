@@ -1,8 +1,8 @@
 import {StyleSheet, Text, TextInput, TextInputProps, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS} from '../constants';
-import EYE from '../assets/icons/icon-eye.svg';
-import EYEOFF from '../assets/icons/icon-eye-off.svg';
+import {COLORS} from '../../constants';
+import EYE from '../../assets/icons/icon-eye.svg';
+import EYEOFF from '../../assets/icons/icon-eye-off.svg';
 type Props = {
   label?: string;
   style?: any;
