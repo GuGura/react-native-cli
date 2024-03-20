@@ -22,39 +22,50 @@ export default function Register({navigation}: {navigation: any}) {
     password: false,
     passwordConfirm: false,
   });
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   function nameHandler(text: string) {
+    if (text.length > 4) {
+      setIsValidate({...isValidate, name: false});
+    }
     setName(text);
   }
 
   function emailHandler(text: string) {
+    if (emailRegex?.test(email)) {
+      setIsValidate({...isValidate, email: false});
+    }
     setEmail(text);
   }
   function passwordHandler(text: string) {
-    console.log('password', text);
+    if (text.length > 5) {
+      setIsValidate({...isValidate, password: false});
+    }
     setPassword(text);
   }
   function passwordConfirmHandler(text: string) {
+    if (password === text) {
+      setIsValidate({...isValidate, passwordConfirm: false});
+    }
     setPasswordConfirm(text);
   }
 
   function onSubmitHandler() {
-    console.log('submit');
     console.log(name, email, password, passwordConfirm);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const validate = isValidate;
-    if (name.length < 3) {
+    if (name?.length < 3) {
       validate.name = true;
     }
-    if (!emailRegex.test(email)) {
+    if (!emailRegex?.test(email)) {
       validate.email = true;
     }
-    if (password.length < 6) {
+    if (password?.length < 6) {
       validate.password = true;
     }
-    if (password !== passwordConfirm) {
+    if (password !== passwordConfirm || passwordConfirm?.length === 0) {
       validate.passwordConfirm = true;
     }
-    setIsValidate(validate);
+    setIsValidate({...validate});
     if (Object.values(validate).every(item => !item)) {
       console.log('submit');
     }
