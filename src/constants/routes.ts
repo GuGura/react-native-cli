@@ -7,6 +7,12 @@ export default {
   HOME_TAB: 'Home Tab',
   HOME_DRAWER: 'Home Drawer',
 
+  ROOMS: 'Rooms',
+  WAITING_ROOM: 'Waiting Room',
+  PLAY: 'Play',
+  HISTORY: 'History',
+  MY_PAGE: 'MyPage',
+
   WALLET: 'Wallet',
   WALLET_DRAWER: 'Wallet Drawer',
 

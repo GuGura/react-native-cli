@@ -5,10 +5,9 @@ import {ROUTES} from '../constants';
 import ForgotPassword from '../screens/auth/ForgotPassword.tsx';
 import Register from '../screens/auth/Register.tsx';
 import BackButton from '../components/UI/BackButton.tsx';
-import {useUserStore} from '../store/userStore.ts';
+
 const Stack = createNativeStackNavigator<any>();
 export default function AuthNavigator() {
-  const {logout} = useUserStore();
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.LOGIN}
