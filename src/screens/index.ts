@@ -1,0 +1,9 @@
+export {default as Home} from './Home';
+export {default as MyPage} from './MyPage';
+export {default as Rooms} from './Rooms';
+export {default as History} from './History';
+export {default as Play} from './play/Play';
+export {default as WaitingRoom} from './play/WaitingRoom';
+export {default as ForgotPassword} from './auth/ForgotPassword.tsx';
+export {default as Login} from './auth/Login.tsx';
+export {default as Register} from './auth/Register.tsx';

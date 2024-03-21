@@ -1,19 +1,24 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Alert, TouchableOpacity} from 'react-native';
+
 import {ROUTES} from '../constants';
-import ForgotPassword from '../screens/auth/ForgotPassword.tsx';
-import Register from '../screens/auth/Register.tsx';
 import BackButton from '../components/UI/BackButton.tsx';
 import Logout from '../assets/icons/icon-log-out.svg';
-import {Alert, TouchableOpacity} from 'react-native';
+import IconHome from '../assets/icons/icon-home.svg';
+import IconHistory from '../assets/icons/icon-inbox.svg';
+import IconMyPage from '../assets/icons/icon-user.svg';
+import IconRooms from '../assets/icons/ghostBottom.svg';
 import {useLogout} from '../hooks/auth.ts';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home.tsx';
-import Rooms from '../screens/Rooms.tsx';
-import History from '../screens/History.tsx';
-import MyPage from '../screens/MyPage.tsx';
-import WaitingRoom from '../screens/play/WaitingRoom.tsx';
-import Play from '../screens/play/Play.tsx';
+import {
+  Home,
+  History,
+  MyPage,
+  Rooms,
+  WaitingRoom,
+  Play,
+} from '../screens/index';
 
 const Stack = createNativeStackNavigator<any>();
 const Bottom = createBottomTabNavigator<any>();
@@ -95,11 +100,38 @@ function BottomNavigator() {
               <Logout width={30} height={30} style={{marginRight: 10}} />
             </TouchableOpacity>
           ),
+          tabBarIcon: ({color, size}) => (
+            <IconHome width={size} height={size} color={color} />
+          ),
         }}
       />
-      <Bottom.Screen name={ROUTES.ROOMS} component={Rooms} />
-      <Bottom.Screen name={ROUTES.HISTORY} component={History} />
-      <Bottom.Screen name={ROUTES.MY_PAGE} component={MyPage} />
+      <Bottom.Screen
+        name={ROUTES.ROOMS}
+        component={Rooms}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <IconRooms width={size} height={size} color={color} />
+          ),
+        }}
+      />
+      <Bottom.Screen
+        name={ROUTES.HISTORY}
+        component={History}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <IconHistory width={size} height={size} color={color} />
+          ),
+        }}
+      />
+      <Bottom.Screen
+        name={ROUTES.MY_PAGE}
+        component={MyPage}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <IconMyPage width={size} height={size} color={color} />
+          ),
+        }}
+      />
     </Bottom.Navigator>
   );
 }
