@@ -13,8 +13,12 @@ import GHOST from '../../assets/icons/ghost.svg';
 import ICON from '../../assets/icons/icon-kakaotalk-light.svg';
 import LoginForm from '../../components/login/LoginForm.tsx';
 import SecondButton from '../../components/UI/SecondButton.tsx';
+import {useSignIn} from '../../hooks/auth.ts';
+import LoadingOverlay from '../../components/UI/LoadingOverlay.tsx';
 
 export default function Login({navigation}: any): React.ReactElement {
+  const {mutate, isPending} = useSignIn();
+
   function forgotPasswordHandler() {
     navigation.navigate(ROUTES.FORGOT_PASSWORD);
   }
@@ -22,13 +26,14 @@ export default function Login({navigation}: any): React.ReactElement {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+        {isPending && <LoadingOverlay message={'Logging in...'} />}
         <View style={styles.main}>
           <View style={styles.row}>
             <GHOST width={80} height={80} />
             <Text style={styles.brandName}>Ghost</Text>
           </View>
           <Text style={styles.loginContinueTxt}>Login in to join Ghost!</Text>
-          <LoginForm />
+          <LoginForm onLogin={mutate} />
           <SecondButton
             txt={'Forgot Password'}
             onPress={forgotPasswordHandler}
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 15,
     backgroundColor: COLORS.white,
+    position: 'relative',
   },
   main: {
     flex: 1,

@@ -1,13 +1,19 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import AuthNavigator from './AuthNavigator.tsx';
+import {useUserStore} from '../store/userStore.ts';
+import BottomTabNavigator from './BottomTabNavigator.tsx';
+import AuthProvider from '../constants/provider/AuthProvider.tsx';
+import {useUsers} from '../hooks/auth.ts';
 
 export default function Application() {
-  //TODO: const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const {isAuthenticated} = useUserStore();
+  const user = useUsers();
   return (
-    <NavigationContainer>
-      {/*TODO: {isLoggedIn? <BottomTabNavigator /> : <AuthNavigator /> }*/}
-      <AuthNavigator />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        {user?.token ? <BottomTabNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthProvider>
   );
 }

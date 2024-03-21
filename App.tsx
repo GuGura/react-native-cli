@@ -8,12 +8,15 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import Application from './src/navigators/Application.tsx';
+import QueryProvider from './src/constants/provider/QueryProvider.tsx';
 
 export default function App() {
   return (
     <>
       <StatusBar barStyle={'dark-content'} />
-      <Application />
+      <QueryProvider>
+        <Application />
+      </QueryProvider>
     </>
   );
 }

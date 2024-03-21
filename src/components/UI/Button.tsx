@@ -7,11 +7,12 @@ type ButtonProps = {
   onPress: () => void;
   text: string;
   colors: string[];
+  disable?: boolean;
 };
 
-export default function Button({onPress, text, colors}: ButtonProps) {
+export default function Button({onPress, text, colors, disable}: ButtonProps) {
   return (
-    <View style={styles.btnWrapper}>
+    <View style={[styles.btnWrapper, disable && styles.loading]}>
       <LinearGradient
         colors={colors}
         style={styles.linearGradient}
@@ -20,6 +21,7 @@ export default function Button({onPress, text, colors}: ButtonProps) {
         <TouchableOpacity
           onPress={onPress}
           activeOpacity={0.7}
+          disabled={disable}
           style={styles.btn}>
           <Text style={styles.btnTxt}>{text}</Text>
         </TouchableOpacity>
@@ -29,6 +31,9 @@ export default function Button({onPress, text, colors}: ButtonProps) {
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    opacity: 0.8,
+  },
   btnWrapper: {
     height: 55,
     marginTop: 12,

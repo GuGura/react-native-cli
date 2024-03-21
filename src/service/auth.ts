@@ -7,6 +7,16 @@ interface Error {
   isError: boolean;
 }
 
+export async function getUserInfo() {
+  const user = auth().currentUser;
+  const token = await user?.getIdToken();
+  return {
+    displayName: user?.displayName,
+    email: user?.email,
+    token: token,
+  };
+}
+
 export async function SingUp({
   email,
   password,
@@ -14,26 +24,9 @@ export async function SingUp({
   email: string;
   password: string;
 }): Promise<UserCredential | Error> {
-  try {
-    const res = await auth().createUserWithEmailAndPassword(email, password);
-    const nickName = nickNameGenerate();
-    await res.user.updateProfile({displayName: nickName});
-    return res;
-  } catch (error: any) {
-    let message = 'error';
-    if (error.code === 'auth/email-already-in-use') {
-      message = 'That email address is already in use!';
-    }
-
-    if (error.code === 'auth/invalid-email') {
-      message = 'That email address is invalid!';
-    }
-
-    return {
-      message: message,
-      isError: true,
-    };
-  }
+  const res = await auth().createUserWithEmailAndPassword(email, password);
+  const nickName = nickNameGenerate();
+  await res.user.updateProfile({displayName: nickName});
 }
 
 export async function SignIn({
@@ -43,23 +36,9 @@ export async function SignIn({
   email: string;
   password: string;
 }): Promise<UserCredential | Error> {
-  try {
-    const {user} = await auth().signInWithEmailAndPassword(email, password);
-    const token = await user?.getIdToken();
-    console.log(token);
-    console.log(user.displayName, user.email);
-  } catch (error: any) {
-    let message = 'error';
-    if (error.code === 'auth/invalid-credential') {
-      message = 'Invalid email or password.';
-    }
-    return {
-      message: message,
-      isError: true,
-    };
-  }
+  return await auth().signInWithEmailAndPassword(email, password);
 }
 
 export async function logout() {
-  await auth().signOut();
+  return await auth().signOut();
 }

@@ -7,12 +7,15 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, ROUTES} from '../../constants';
+import {COLORS} from '../../constants';
 import Input from '../../components/UI/Input.tsx';
 import Button from '../../components/UI/Button.tsx';
-import {SingUp} from '../../service/auth.ts';
 
-export default function Register({navigation}: {navigation: any}) {
+import {useSignUp} from '../../hooks/auth.ts';
+import LoadingOverlay from '../../components/UI/LoadingOverlay.tsx';
+
+export default function Register() {
+  const {mutate, isPending} = useSignUp();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -55,22 +58,14 @@ export default function Register({navigation}: {navigation: any}) {
     }
     setIsValidate({...validate});
     if (Object.values(validate).every(item => !item)) {
-      const res = await SingUp({email, password});
-
-      if (res.isError) {
-        Alert.alert('Error', res.message);
-        return;
-      }
-      if (res.user) {
-        console.log(res);
-        navigation.navigate(ROUTES.LOGIN);
-      }
+      await mutate({email, password});
     }
   }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
+        {isPending && <LoadingOverlay message={'Signing up...'} />}
         <View style={styles.container}>
           <Text style={styles.TitleTxt}>Sign Up to join Ghost!</Text>
           <Input
@@ -111,6 +106,7 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: COLORS.white,
     flex: 1,
+    position: 'relative',
   },
   container: {
     padding: 20,

@@ -1,11 +1,14 @@
-import {Alert, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Input from '../UI/Input.tsx';
 import Button from '../UI/Button.tsx';
 import {COLORS} from '../../constants';
 import React, {useState} from 'react';
-import {SignIn} from '../../service/auth.ts';
 
-export default function LoginForm() {
+export default function LoginForm({
+  onLogin,
+}: {
+  onLogin: ({email, password}: {email: string; password: string}) => void;
+}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidate, setIsValidate] = useState({
@@ -38,11 +41,7 @@ export default function LoginForm() {
     setIsValidate({...validate});
 
     if (Object.values(validate).every(item => !item)) {
-      const res = await SignIn({email, password});
-
-      if (res?.isError) {
-        Alert.alert('Error', res.message);
-      }
+      await onLogin({email, password});
     }
   }
 

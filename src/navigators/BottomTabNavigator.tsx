@@ -5,10 +5,29 @@ import {ROUTES} from '../constants';
 import ForgotPassword from '../screens/auth/ForgotPassword.tsx';
 import Register from '../screens/auth/Register.tsx';
 import BackButton from '../components/UI/BackButton.tsx';
-import {useUserStore} from '../store/userStore.ts';
+import Logout from '../assets/icons/icon-log-out.svg';
+import {Alert, TouchableOpacity} from 'react-native';
+import {useLogout} from '../hooks/auth.ts';
+
 const Stack = createNativeStackNavigator<any>();
-export default function AuthNavigator() {
-  const {logout} = useUserStore();
+
+function logoutHandler(onLogout: any) {
+  Alert.alert('Logout', 'Are you sure you want to logout?', [
+    {
+      text: 'Yes',
+      onPress: async () => {
+        onLogout();
+      },
+    },
+    {
+      text: 'No',
+      onPress: () => console.log('Cancel Pressed'),
+    },
+  ]);
+}
+
+export default function BottomTabNavigator() {
+  const {onLogout} = useLogout();
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.LOGIN}
@@ -19,7 +38,11 @@ export default function AuthNavigator() {
         name={ROUTES.LOGIN}
         component={Login}
         options={{
-          headerShown: false,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => logoutHandler(onLogout)}>
+              <Logout width={30} height={30} style={{marginRight: 10}} />
+            </TouchableOpacity>
+          ),
         }}
       />
       <Stack.Screen
@@ -33,7 +56,7 @@ export default function AuthNavigator() {
             <BackButton
               navigation={navigation}
               tintColor={tintColor}
-              title={'Forgot Password'}
+              title={'Forgot text'}
             />
           ),
         })}
