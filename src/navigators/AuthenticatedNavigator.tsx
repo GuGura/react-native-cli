@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Alert, TouchableOpacity} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import {ROUTES} from '../constants';
 import BackButton from '../components/UI/BackButton.tsx';
@@ -19,7 +19,6 @@ import {
   WaitingRoom,
   Play,
 } from '../screens/index';
-
 const Stack = createNativeStackNavigator<any>();
 const Bottom = createBottomTabNavigator<any>();
 export default function AuthenticatedNavigator() {
@@ -97,9 +96,13 @@ function BottomNavigator() {
         options={{
           headerRight: () => (
             <TouchableOpacity onPress={logoutHandler}>
-              <Logout width={30} height={30} style={{marginRight: 10}} />
+              <Logout width={30} height={30} style={styles.rightIcon} />
             </TouchableOpacity>
           ),
+          headerTintColor: 'black',
+          headerTitle: '',
+          headerShadowVisible: false, // applied here
+          headerLeft: () => <Text style={styles.leftTitle}>Home</Text>,
           tabBarIcon: ({color, size}) => (
             <IconHome width={size} height={size} color={color} />
           ),
@@ -135,3 +138,14 @@ function BottomNavigator() {
     </Bottom.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  leftTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  rightIcon: {
+    marginRight: 10,
+  },
+});

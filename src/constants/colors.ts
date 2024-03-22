@@ -10,4 +10,6 @@ export default {
   grayLight: '#ccc',
   black: '#0a0a0a',
   yellow: '#ffe500',
+  blue: 'rgb(44,127,227)',
+  txtBg: 'rgb(221,255,188)',
 };

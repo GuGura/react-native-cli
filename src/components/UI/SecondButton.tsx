@@ -5,13 +5,15 @@ import React from 'react';
 export default function SecondButton({
   onPress,
   txt,
+  style,
 }: {
   onPress: () => void;
   txt: string;
+  style?: any;
 }) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text style={styles.forgotPassText}>{txt}</Text>
+      <Text style={[styles.forgotPassText, style]}>{txt}</Text>
     </TouchableOpacity>
   );
 }

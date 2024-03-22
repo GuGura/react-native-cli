@@ -27,7 +27,6 @@ export default function AuthNavigator() {
         options={({navigation}) => ({
           headerTintColor: 'black',
           title: '',
-          headerBackTitleVisible: false,
           headerLeft: ({tintColor}) => (
             <BackButton
               navigation={navigation}
@@ -43,7 +42,6 @@ export default function AuthNavigator() {
         options={({navigation}) => ({
           headerTintColor: 'black',
           title: '',
-          headerBackTitleVisible: false,
           headerShadowVisible: false, // applied here
           headerLeft: ({tintColor}) => (
             <BackButton
