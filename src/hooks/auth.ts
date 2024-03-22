@@ -2,12 +2,15 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {getUserInfo, logout, SignIn, SingUp} from '../service/auth.ts';
 import {Alert} from 'react-native';
 export function useUsers() {
-  const {data} = useQuery({
+  const {data, isPending} = useQuery({
     queryKey: ['user'],
     queryFn: getUserInfo,
   });
 
-  return data;
+  return {
+    user: data,
+    isPending,
+  };
 }
 
 export function useLogout() {

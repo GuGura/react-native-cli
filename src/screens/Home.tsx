@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import React, {useCallback} from 'react';
 import Colors from '../constants/colors.ts';
-import {COLORS, ROUTES} from '../constants';
+import {COLORS} from '../constants';
 import SecondButton from '../components/UI/SecondButton.tsx';
 
 type OpenURLButtonProps = {
   url: string;
 };
 
-export default function Home({navigation}: {navigation: any}) {
+export default function Home() {
   const OpenURLButton = ({url}: OpenURLButtonProps) => {
     const handlePress = useCallback(async () => {
       // Checking if the link is supported for links with custom URL scheme.

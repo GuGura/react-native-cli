@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useUsers} from '../../hooks/auth.ts';
 import {useUserStore} from '../../store/userStore.ts';
 export default function AuthProvider({children}: {children: any}) {
-  const user = useUsers();
+  const {user} = useUsers();
   const [loading, setLoading] = useState(true);
 
   const {authenticate} = useUserStore();
