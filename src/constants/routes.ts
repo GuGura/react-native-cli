@@ -8,6 +8,7 @@ export default {
   HOME_DRAWER: 'Home Drawer',
 
   ROOMS: 'Rooms',
+  CREATE_ROOM: 'Create Room',
   WAITING_ROOM: 'Waiting Room',
   PLAY: 'Play',
   HISTORY: 'History',

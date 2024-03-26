@@ -1,9 +1,16 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Alert, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import {ROUTES} from '../constants';
+import {COLORS, ROUTES} from '../constants';
 import BackButton from '../components/UI/BackButton.tsx';
 import Logout from '../assets/icons/icon-log-out.svg';
 import IconHome from '../assets/icons/icon-home.svg';
@@ -19,6 +26,8 @@ import {
   WaitingRoom,
   Play,
 } from '../screens/index';
+import SecondButton from '../components/UI/SecondButton.tsx';
+import CreateRoom from '../screens/play/CreateRoom.tsx';
 const Stack = createNativeStackNavigator<any>();
 const Bottom = createBottomTabNavigator<any>();
 export default function AuthenticatedNavigator() {
@@ -68,6 +77,23 @@ export default function AuthenticatedNavigator() {
           ),
         })}
       />
+      <Stack.Screen
+        name={ROUTES.CREATE_ROOM}
+        component={CreateRoom}
+        options={({navigation}) => ({
+          headerTintColor: 'black',
+          title: '',
+          headerBackTitleVisible: false,
+          headerShadowVisible: false, // applied here
+          headerLeft: ({tintColor}) => (
+            <BackButton
+              navigation={navigation}
+              tintColor={tintColor}
+              title={'대기방 생성'}
+            />
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 }
@@ -111,11 +137,22 @@ function BottomNavigator() {
       <Bottom.Screen
         name={ROUTES.ROOMS}
         component={Rooms}
-        options={{
+        options={({navigation}) => ({
           tabBarIcon: ({color, size}) => (
             <IconRooms width={size} height={size} color={color} />
           ),
-        }}
+          headerRight: () => {
+            return (
+              <View style={styles.container}>
+                <SecondButton
+                  txt={'생성'}
+                  onPress={() => navigation.navigate(ROUTES.CREATE_ROOM)}
+                  style={styles.rightButton}
+                />
+              </View>
+            );
+          },
+        })}
       />
       <Bottom.Screen
         name={ROUTES.HISTORY}
@@ -147,5 +184,19 @@ const styles = StyleSheet.create({
   },
   rightIcon: {
     marginRight: 10,
+  },
+  rightButton: {
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+    marginRight: 10,
+    borderRadius: 5,
+    marginTop: 0,
+  },
+  container: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
   },
 });
