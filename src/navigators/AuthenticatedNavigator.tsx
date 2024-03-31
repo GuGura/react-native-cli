@@ -1,14 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import {COLORS, ROUTES} from '../constants';
 import BackButton from '../components/UI/BackButton.tsx';
@@ -26,8 +19,8 @@ import {
   WaitingRoom,
   Play,
 } from '../screens/index';
-import SecondButton from '../components/UI/SecondButton.tsx';
-import CreateRoom from '../screens/play/CreateRoom.tsx';
+import CreateRoom from '../components/modal/CreateRoom.tsx';
+import Popover from '../components/modal/Popover.tsx';
 const Stack = createNativeStackNavigator<any>();
 const Bottom = createBottomTabNavigator<any>();
 export default function AuthenticatedNavigator() {
@@ -77,23 +70,6 @@ export default function AuthenticatedNavigator() {
           ),
         })}
       />
-      <Stack.Screen
-        name={ROUTES.CREATE_ROOM}
-        component={CreateRoom}
-        options={({navigation}) => ({
-          headerTintColor: 'black',
-          title: '',
-          headerBackTitleVisible: false,
-          headerShadowVisible: false, // applied here
-          headerLeft: ({tintColor}) => (
-            <BackButton
-              navigation={navigation}
-              tintColor={tintColor}
-              title={'대기방 생성'}
-            />
-          ),
-        })}
-      />
     </Stack.Navigator>
   );
 }
@@ -137,21 +113,10 @@ function BottomNavigator() {
       <Bottom.Screen
         name={ROUTES.ROOMS}
         component={Rooms}
-        options={({navigation}) => ({
+        options={() => ({
           tabBarIcon: ({color, size}) => (
             <IconRooms width={size} height={size} color={color} />
           ),
-          headerRight: () => {
-            return (
-              <View style={styles.container}>
-                <SecondButton
-                  txt={'생성'}
-                  onPress={() => navigation.navigate(ROUTES.CREATE_ROOM)}
-                  style={styles.rightButton}
-                />
-              </View>
-            );
-          },
         })}
       />
       <Bottom.Screen
