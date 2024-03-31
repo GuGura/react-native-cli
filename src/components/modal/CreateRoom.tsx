@@ -1,6 +1,5 @@
 import {
   Keyboard,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -20,8 +19,18 @@ export default function CreateRoom({
   modalVisible: boolean;
   setModalVisible: any;
 }) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [roomName, setRoomName] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [isHiddenRoom, setIsHiddenRoom] = useState(false);
+  const toggleSwitch = () => setIsHiddenRoom(previousState => !previousState);
+
+  function confirmHandler() {
+    // Create room
+    setModalVisible(!modalVisible);
+  }
+  function cancelHandler() {
+    setModalVisible(!modalVisible);
+  }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.centeredView}>
@@ -31,29 +40,44 @@ export default function CreateRoom({
             <View style={styles.hr} />
             <View style={styles.inputContainer}>
               <Text style={styles.label}>방 제목</Text>
-              <Input placeholder="방 이름" style={styles.input} />
+              <Input
+                placeholder="방 이름"
+                style={styles.input}
+                value={roomName}
+                onChangeText={setRoomName}
+              />
             </View>
             <View style={styles.switchContainer}>
-              <SwitchToggle isEnabled={isEnabled} toggleSwitch={toggleSwitch} />
+              <SwitchToggle
+                isEnabled={isHiddenRoom}
+                toggleSwitch={toggleSwitch}
+              />
             </View>
-            {isEnabled && (
+            {isHiddenRoom && (
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>패스워드</Text>
-                <Input placeholder="패스워드" style={styles.input} />
+                <Input
+                  placeholder="패스워드"
+                  style={styles.input}
+                  textContentType={'password'}
+                  value={pwd}
+                  onChangeText={setPwd}
+                />
               </View>
             )}
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.button}
+              disabled={!roomName}
+              style={[styles.button, !roomName && styles.disable]}
               activeOpacity={0.6}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={confirmHandler}>
               <Text style={styles.textStyle}>확인</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               activeOpacity={0.6}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={cancelHandler}>
               <Text style={styles.textStyle}>취소</Text>
             </TouchableOpacity>
           </View>
@@ -148,6 +172,9 @@ const styles = StyleSheet.create({
     borderColor: colors.gradientForm,
     borderRadius: 5,
     backgroundColor: colors.gradientForm,
+  },
+  disable: {
+    opacity: 0.5,
   },
   textStyle: {
     color: 'white',
